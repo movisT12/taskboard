@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaskBoard</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<main class="container">
+    <header class="page-header">
+        <h1>TaskBoard</h1>
+        <a th:href="@{/tasks/new}" class="btn btn-primary">+ New Task</a>
+    </header>
+
+    <div class="stats">
+        <div class="stat-card">
+            <span class="stat-label">To Do</span>
+            <span class="stat-value" th:text="${todoCount}">0</span>
+        </div>
+        <div class="stat-card">
+            <span class="stat-label">In Progress</span>
+            <span class="stat-value" th:text="${inProgressCount}">0</span>
+        </div>
+        <div class="stat-card">
+            <span class="stat-label">Done</span>
+            <span class="stat-value" th:text="${doneCount}">0</span>
+        </div>
+    </div>
+
+    <table class="task-table" aria-label="Task list">
+        <thead>
+            <tr>
+                <th scope="col">Title</th>
+                <th scope="col">Status</th>
+                <th scope="col">Priority</th>
+                <th scope="col">Due Date</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="task : ${tasks}" th:classappend="${task.status == 'DONE'} ? 'done'">
+                <td th:text="${task.title}"></td>
+                <td>
+                    <span class="badge"
+                          th:classappend="'badge-' + ${task.status != null ? task.status.toLowerCase() : ''}"
+                          th:text="${task.status}"></span>
+                </td>
+                <td>
+                    <span class="badge"
+                          th:classappend="'badge-' + ${task.priority != null ? task.priority.toLowerCase() : ''}"
+                          th:text="${task.priority}"></span>
+                </td>
+                <td th:text="${task.dueDate} ?: '—'"></td>
+                <td class="actions">
+                    <a th:href="@{/tasks/{id}/edit(id=${task.id})}" class="btn btn-sm">Edit</a>
+                    <form th:action="@{/tasks/{id}/delete(id=${task.id})}" method="post" style="display:inline">
+                        <button type="submit" class="btn btn-sm btn-danger"
+                                onclick="return confirm('Delete this task?')">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(tasks)}">
+                <td colspan="5" class="empty-state">No tasks yet. Create one to get started.</td>
+            </tr>
+        </tbody>
+    </table>
+</main>
+</body>
+</html>
