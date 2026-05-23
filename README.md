@@ -62,3 +62,20 @@ mvn spring-boot:run
 Open `http://localhost:8080/tasks`
 
 ## Project Structure
+src/
+├── main/
+│   ├── java/ca/sheridancollege/thakumov/
+│   │   ├── controller/   TaskController.java
+│   │   ├── model/        Task.java
+│   │   ├── repository/   TaskRepository.java
+│   │   └── service/      TaskService.java
+│   └── resources/
+│       ├── templates/tasks/   list.html, form.html
+│       └── static/css/        style.css
+└── test/
+## Known Issues / Future Work
+
+- No user authentication
+- No pagination on task list
+- Filter by status/priority not yet wired to UI
+  
