@@ -72,7 +72,6 @@ src/
 │   └── resources/
 │       ├── templates/tasks/   list.html, form.html
 │       └── static/css/        style.css
-└── test/
 ## Known Issues / Future Work
 
 - No user authentication
